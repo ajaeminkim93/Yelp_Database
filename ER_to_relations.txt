@@ -1,5 +1,5 @@
 CREATE TABLE Business(
-	business_id VARCHAR(30),
+	business_id VARCHAR(30) NOT NULL,
 	review_count INTEGER,
 	stars FLOAT,
 	latitude FLOAT,
@@ -13,8 +13,8 @@ CREATE TABLE Business(
 );
 
 CREATE TABLE Hours(
-	business_id VARCHAR(30),
-	day VARCHAR(15),
+	business_id VARCHAR(30) NOT NULL,
+	day VARCHAR(15) NOT NULL,
 	close time TIME,
 	open time TIME,
 	PRIMARY KEY(business_id, day)
@@ -23,41 +23,41 @@ CREATE TABLE Hours(
 
 CREATE TABLE Attributes(
 	value VARCHAR(30),
-	attribute VARCHAR(30),
-	business_id VARCHAR(30),
+	attribute VARCHAR(30) NOT NULL,
+	business_id VARCHAR(30) NOT NULL,
 	PRIMARY KEY(business_id, attribute),
 	CONSTRAINT 'businessID' FOREIGN KEY(business_id) REFERENCES Business(business_id),
 );
 
 CREATE TABLE Catagories(
-	catagory VARCHAR(40),
-	business_id VARCHAR(30),
+	catagory VARCHAR(40) NOT NULL,
+	business_id VARCHAR(30) NOT NULL,
 	PRIMARY KEY(business_id, catagory)
 	CONSTRAINT 'business_id' FOREIGN KEY(business_id) REFERENCES Business(business_id),
 );
 
 CREATE TABLE Checkin(
-	time TIME,
-	date DATE,
-	business_id VARCHAR(30),
+	time TIME NOT NULL,
+	date DATE NOT NULL,
+	business_id VARCHAR(30) NOT NULL,
 	PRIMARY KEY(business_id, time, date),
 	CONSTRAINT 'businessID' FOREIGN KEY(business_id) REFERENCES Business(business_id),
 );
 
 CREATE TABLE Tip(
 	text VARCHAR(200),
-	date DATE,
-	time TIME,
+	date DATE NOT NULL,
+	time TIME NOT NULL,
 	likes INTEGER,
-	business_id VARCHAR(30),
-	user_id VARCHAR(30),
+	business_id VARCHAR(30) NOT NULL,
+	user_id VARCHAR(30) NOT NULL,
 	PRIMARY KEY(business_id, user_id, date, time),
 	CONSTRAINT 'businessID' FOREIGN KEY(business_id) REFERENCES Business(business_id),
 	CONSTRAINT 'userID' FOREIGN KEY(user_id) REFERENCES User(user_id),
 );
 
 CREATE TABLE User(
-	user_id VARCHAR(30),
+	user_id VARCHAR(30) NOT NULL,
 	yelping_since DATE,
 	longitude FLOAT,
 	latitude FLOAT,
@@ -70,8 +70,8 @@ CREATE TABLE User(
 );
 
 CREATE TABLE friends(
-	user_id VARCHAR(30),
-	friends_id VARCHAR(30),
+	user_id VARCHAR(30) NOT NULL,
+	friends_id VARCHAR(30) NOT NULL,
 	PRIMARY KEY(user_id, friends_id),
 	CONSTRAINT 'friendsID' FOREIGN KEY(user_id) REFERENCES user(user_id),
 	CONSTRAINT 'userID' FOREIGN KEY(user_id) REFERENCES user(user_id),
