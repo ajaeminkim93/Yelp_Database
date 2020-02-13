@@ -8,9 +8,33 @@ CREATE TABLE Business(
 	city VARCHAR(30),
 	state VARCHAR(30),
 	postal_code INTEGER,
-	number of checkins INTEGER, //function to calculate this?
+	number of checkins INTEGER,
 	PRIMARY KEY(business_id),
-)
+);
+
+CREATE TABLE Hours(
+	business_id VARCHAR(30),
+	day VARCHAR(15),
+	close time TIME,
+	open time TIME,
+	PRIMARY KEY(business_id, day)
+	CONSTRAINT 'businessID' FOREIGN KEY(business_id) REFERENCES Business(business_id),
+);
+
+CREATE TABLE Attributes(
+	value VARCHAR(30),
+	attribute VARCHAR(30),
+	business_id VARCHAR(30),
+	PRIMARY KEY(business_id, attribute),
+	CONSTRAINT 'businessID' FOREIGN KEY(business_id) REFERENCES Business(business_id),
+);
+
+CREATE TABLE Catagories(
+	catagory VARCHAR(40),
+	business_id VARCHAR(30),
+	PRIMARY KEY(business_id, catagory)
+	CONSTRAINT 'business_id' FOREIGN KEY(business_id) REFERENCES Business(business_id),
+);
 
 CREATE TABLE Checkin(
 	time TIME,
@@ -18,42 +42,40 @@ CREATE TABLE Checkin(
 	business_id VARCHAR(30),
 	PRIMARY KEY(business_id, time, date),
 	CONSTRAINT 'businessID' FOREIGN KEY(business_id) REFERENCES Business(business_id),
-)
+);
 
 CREATE TABLE Tip(
 	text VARCHAR(200),
 	date DATE,
 	time TIME,
-	likes INTEGER, //function?
+	likes INTEGER,
 	business_id VARCHAR(30),
 	user_id VARCHAR(30),
 	PRIMARY KEY(business_id, user_id, date, time),
 	CONSTRAINT 'businessID' FOREIGN KEY(business_id) REFERENCES Business(business_id),
 	CONSTRAINT 'userID' FOREIGN KEY(user_id) REFERENCES User(user_id),
-)
+);
 
 CREATE TABLE User(
 	user_id VARCHAR(30),
 	yelping_since DATE,
-	longitude FLOAT, //function? user entered
-	latitude FLOAT, //function? user entered
-	useful INTEGER, //function derived
-	tip count INTEGER, //function derived
-	total tip likes INTEGER, //function derived
-	fans INTEGER, //function derived
-	count of votes INTEGER, //function derived
-	average stars FLOAT, //function derived
+	longitude FLOAT,
+	latitude FLOAT,
+	useful INTEGER,
+	tip count INTEGER,
+	total tip likes INTEGER,
+	fans INTEGER,
+	average stars FLOAT,
 	PRIMARY KEY(user_id),
-)
+);
 
-CREATE TABLE near(
-	business_id VARCHAR(30),
+CREATE TABLE friends(
 	user_id VARCHAR(30),
-	nearest FLOAT //function derived
-	PRIMARY KEY(business_id, user_id),
-	CONSTRAINT 'businessID' FOREIGN KEY(business_id) REFERENCES Business(business_id),
-	CONSTRAINT 'userID' FOREIGN KEY(user_id) REFERENCES User(user_id),
-)
+	friends_id VARCHAR(30),
+	PRIMARY KEY(user_id, friends_id),
+	CONSTRAINT 'friendsID' FOREIGN KEY(user_id) REFERENCES user(user_id),
+	CONSTRAINT 'userID' FOREIGN KEY(user_id) REFERENCES user(user_id),
+);
 
 
 	
